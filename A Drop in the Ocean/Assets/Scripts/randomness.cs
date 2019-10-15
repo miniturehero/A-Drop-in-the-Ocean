@@ -10,20 +10,18 @@ public class randomness : MonoBehaviour
     private Renderer leftArmMat, rightArmMat, characterMat;
 
     public float chance;
+    public bool isPlayer = false;
 
     public gameManager GM;
 
     public float moveSpeed = 2;
-    [Range(0, 1)]
-    public float chancePercent;
 
-    private void Start()
+    private void Awake()
     {
         character = gameObject;
 
         GM = FindObjectOfType<gameManager>();
-        chancePercent = GM.chancePercent;
-
+        
         leftArmMat = leftArm.GetComponent<Renderer>();
         rightArmMat = rightArm.GetComponent<Renderer>();
         characterMat = character.GetComponent<Renderer>();
@@ -33,26 +31,38 @@ public class randomness : MonoBehaviour
 
         randomise();
 
+        if(isPlayer == true)
+        {
+            chance = 0;
+        }
+
+        if(isPlayer == false)
+        {
+            chance = GM.chancePercent;
+        }
     }
 
     public void randomise()
     {
-        chance = Random.value;
-        print("Randomised");
+        if (isPlayer == false)
+        {
+            chance = Random.value;
+            print("Randomised");
 
-        return;
+            return;
+        }
     }
 
     void Update()
     {
-        if (chance > chancePercent)
+        if (chance > GM.chancePercent)
         {
             posLeftArmCheck();
             posRightArmCheck();
             moveAxis();
         }
 
-        if (chance <= chancePercent)
+        if (chance <= GM.chancePercent)
         {
             negLeftArmCheck();
             negRightArmCheck();

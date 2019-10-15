@@ -8,27 +8,40 @@ public class gameManager : MonoBehaviour
     [Range(0, 1)]
     public float chancePercent;
 
-    public GameObject characters;
+    public GameObject[] characters;
     public GameObject player;
 
     public Vector3 center;
     public Vector3 size;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        characters = GameObject.FindGameObjectsWithTag("Characters");
+        int playerNumber = Random.Range(0, characters.Length);
+        player = characters[playerNumber];
+
+        characters[playerNumber].GetComponent<randomness>().isPlayer = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
-    }
+        if (Input.GetMouseButtonDown(0))
+        { 
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-    public void spawnCharacters()
-    {
-        //Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2));
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                //Destroy(hit.collider.gameObject);
+                //characters[i] = null;
+
+                if(hit.collider.gameObject == player)
+                {
+                    print("You Lose!");
+                }
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()

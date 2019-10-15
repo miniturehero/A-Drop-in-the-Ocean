@@ -1091,9 +1091,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99d12fadb249b1c49831ceb4a2763b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chancePercent: 0.2
-  characters: {fileID: 0}
-  player: {fileID: 812909441021208956, guid: bd3ff392d4f56c144a5430242aa0cb60, type: 3}
+  chancePercent: 0.67
+  characters: []
+  player: {fileID: 0}
   center: {x: 0, y: 0, z: 0}
   size: {x: 20, y: 0, z: 20}
 --- !u!4 &2018897747
