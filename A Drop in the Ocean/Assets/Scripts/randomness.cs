@@ -11,15 +11,19 @@ public class randomness : MonoBehaviour
 
     public float chance;
 
-    public bool moved = false;
-
-    [Range(0,1)]
-    public float chancePercent;
+    public gameManager GM;
 
     public float moveSpeed = 2;
+    [Range(0, 1)]
+    public float chancePercent;
 
     private void Start()
     {
+        character = gameObject;
+
+        GM = FindObjectOfType<gameManager>();
+        chancePercent = GM.chancePercent;
+
         leftArmMat = leftArm.GetComponent<Renderer>();
         rightArmMat = rightArm.GetComponent<Renderer>();
         characterMat = character.GetComponent<Renderer>();
@@ -27,8 +31,16 @@ public class randomness : MonoBehaviour
         leftArmMat.material.color = Color.green;
         rightArmMat.material.color = Color.green;
 
-        chance = Random.value;
+        randomise();
 
+    }
+
+    public void randomise()
+    {
+        chance = Random.value;
+        print("Randomised");
+
+        return;
     }
 
     void Update()
@@ -54,6 +66,8 @@ public class randomness : MonoBehaviour
         var moveUpDownAmount = Input.GetAxis("moveUpDown");
 
         transform.position = transform.position + new Vector3(moveLeftRightAmount * moveSpeed * Time.deltaTime, moveUpDownAmount * moveSpeed * Time.deltaTime);
+
+        //randomise();
     }
 
     private void moveReverseAxis()
@@ -62,6 +76,8 @@ public class randomness : MonoBehaviour
         var moveUpDownAmount = Input.GetAxis("moveUpDown");
 
         transform.position = transform.position - new Vector3(moveLeftRightAmount * moveSpeed * Time.deltaTime, moveUpDownAmount * moveSpeed * Time.deltaTime);
+
+        //randomise();
     }
 
     private void move()
@@ -82,7 +98,7 @@ public class randomness : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Q))
         {
             leftArmMat.material.color = Color.green;
-            chance = Random.value;
+            randomise();
         }
     }
 
@@ -96,7 +112,7 @@ public class randomness : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.E))
         {
             rightArmMat.material.color = Color.green;
-            chance = Random.value;
+            randomise();
         }
     }
 
@@ -104,13 +120,13 @@ public class randomness : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Q))
         {
-            leftArmMat.material.color = Color.green;
+            rightArmMat.material.color = Color.red;
         }
 
         if (Input.GetKeyUp(KeyCode.Q))
         {
-            leftArmMat.material.color = Color.green;
-            chance = Random.value;
+            rightArmMat.material.color = Color.green;
+            randomise();
         }
     }
 
@@ -118,13 +134,13 @@ public class randomness : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.E))
         {
-            rightArmMat.material.color = Color.green;
+            leftArmMat.material.color = Color.red;
         }
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            rightArmMat.material.color = Color.green;
-            chance = Random.value;
+            leftArmMat.material.color = Color.green;
+            randomise();
         }
     }
 }
